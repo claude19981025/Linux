@@ -1,0 +1,8 @@
+#!/bin/sh
+echo First Argument: $1
+echo Third Argument: $3
+echo Total Argument Number: $#
+echo All Argument: $@
+echo Script Name: $0
+echo Process ID: $$
+echo Exit Code: $?

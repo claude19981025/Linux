@@ -1,0 +1,86 @@
+\documentclass[12pt,a4paper]{article}
+\title{Linux Notes}
+\author{Claude Lu}
+
+\usepackage{xcolor}     
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{enumerate}
+\usepackage{enumitem} %允許自定義bullet
+\usepackage{amsmath, amssymb, amsfonts} %basic package for math expressions.
+\usepackage{listings}
+\usepackage{CJKutf8}
+\usepackage[top=1in, bottom=1in, left=1in, right=1in]{geometry}
+%表格必用
+\usepackage{multirow}
+\usepackage{hhline, booktabs}
+%enable hyperlink
+\usepackage{hyperref}
+\usepackage{array}
+
+%enable lstlisting
+\usepackage{listings}
+
+\usepackage{framed}
+
+%自定義顏色
+\definecolor{rublue}{HTML}{0036A7}
+\definecolor{rured}{HTML}{D62718}
+\definecolor{vscodegreen}{HTML}{4EC9B0}
+\definecolor{vscodeblack}{HTML}{1E1E1E}
+%\definecolor{vscodeblack}{HTML}{4D4D4D}
+\definecolor{vscodeyellow}{HTML}{DCDCAA}
+\definecolor{vscodeblue}{HTML}{569CD6}
+%自定義命令
+\newcommand{\bluetexttt}[1]{\textcolor{blue}{\texttt{#1}}}
+\newcommand{\redtexttt}[1]{\textcolor{red}{\texttt{#1}}}
+\newcommand{\redtext}[1]{\textcolor{red}{#1}}
+
+\newcommand{\rt}[1]{\textcolor{red}{#1}}
+\newcommand{\bt}[1]{\textcolor{blue}{#1}}
+\newcommand{\vsgt}[1]{\textcolor{vscodegreen}{#1}}
+\newcommand{\vsft}[1]{\textcolor{vscodeyellow}{#1}}
+\newcommand{\vsbt}[1]{\textcolor{vscodeblue}{#1}}
+
+\newcommand{\struct}[1]{\colorbox{vscodeblack}{\vsgt{#1}}}
+\newcommand{\function}[1]{\colorbox{vscodeblack}{\vsft{#1}}}
+\newcommand{\macro}[1]{\colorbox{vscodeblack}{\vsbt{#1}}}
+
+
+\newcommand{\bs}[1]{\boldsymbol{#1}}
+
+
+\lstset{
+	basicstyle=\ttfamily, %use typewriter font
+	keywordstyle=\color{blue},%關鍵字顏色
+	commentstyle=\color{teal}, %註釋顏色 
+	stringstyle=\color{red}, % Strings in red
+	tabsize=4, % Set tab size to 4 spaces
+	showspaces=false, % Do not show spaces
+	showstringspaces=true, % Do not show string spaces
+	breaklines=true, %自動換行
+	frame=single %在代碼外加上外框
+}
+\begin{document}
+\maketitle
+\section{Shell Script}
+\subsection{Rule of Thumb}
+\begin{enumerate}
+	\item All bash script shall shall start with \bt{\#!/bin/sh}
+\end{enumerate}
+
+\subsection{Special Variables}
+\begin{enumerate}
+	\item \textbf{Individual Arguments}: \bt{\$1}, \bt{\$2}, representing the n-th argument of the bash script, you can think of it as the combination of \bt{argc} and \bt{argv}. One can utilize \bt{shift} command to increment the number of individual arguments by one.
+	\item \textbf{Number of Arguments}: \bt{\$\#}
+	\item \textbf{All Arguments}: \bt{\$@}
+	\item \textbf{Script Name}: \bt{\$0}
+	\item \textbf{Process ID}: \bt{\$\$}
+	\item \textbf{Exit Code}: \bt{\$?} The exit code holds the \rt{last} command that shell executed
+\end{enumerate}
+
+\subsection{Conditionals}
+\begin{enumerate}
+	\item s
+\end{enumerate}
+\end{document}
