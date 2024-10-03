@@ -9,7 +9,6 @@
 \usepackage{enumitem} %允許自定義bullet
 \usepackage{amsmath, amssymb, amsfonts} %basic package for math expressions.
 \usepackage{listings}
-\usepackage{CJKutf8}
 \usepackage[top=1in, bottom=1in, left=1in, right=1in]{geometry}
 %表格必用
 \usepackage{multirow}
@@ -63,10 +62,76 @@
 }
 \begin{document}
 \maketitle
+\section{Process}
+\begin{enumerate}
+	\item Run process in background by adding \bt{ \&}:
+	\begin{footnotesize}
+	\begin{verbatim}
+	./your_executable &
+	\end{verbatim}
+	\item \textbf{UID}: user ID of the process owner, like \textit{root}, \textit{claude}
+	\item \textbf{PID}: Process ID
+	\item \textbf{PID}: Parent Process ID
+	\item \textbf{C}: CPU utilization
+	\item \textbf{STIME}: start time of the process
+	\item \textbf{TTY}: Terminal associated with the process
+	\item \textbf{TIME}: Total CPU time used
+	\item \textbf{CMD}: Command that started the process
+	\end{footnotesize}
+\end{enumerate}
+Common usage
+\begin{footnotesize}
+\begin{verbatim}
+$ ps -ef
+$ ps -fp <process ID>
+$ ps -o pid,ppid,tty,time <process ID>
+# Show call hierarchy
+$ pstree -p <processID>
+\end{verbatim}
+\begin{enumerate}
+	\item -p: required a process ID
+	\item -o: option, including:
+	\begin{enumerate}
+		\item \textbf{pid}
+		\item \textbf{ppid}
+		\item \textbf{tty}
+		\item \textbf{cputime}: CPU time used by the process
+		\item \textbf{etime}: Elapsed time in MM:SS
+		\item \textbf{stime}: start time of the process
+		\item \textbf{args}: command with all its arguments
+	\end{enumerate}
+\end{enumerate}
+\end{footnotesize}
+
+\section{chmod}
+Use in numeric mode
+\begin{footnotesize}
+\begin{verbatim}
+# Open all permission
+# Owner(user) | Group | Others
+chmod 777 <file>
+# r (read)=4
+# w (write)=2
+# x (execute)=1
+\end{verbatim}
+\end{footnotesize}
+
+\section{date and time}
+\begin{footnotesize}
+\begin{verbatim}
+$ date +%[OPTION]
+OPTION
+%F: %+4Y-%m-%d
+%r: 12 hour
+\end{verbatim}
+\end{footnotesize}
+
 \section{Shell Script}
 \subsection{Rule of Thumb}
 \begin{enumerate}
 	\item All bash script shall shall start with \bt{\#!/bin/sh}
+	\item \bt{\#!} Reads \textbf{sharp bang} or \textbf{Shebang}
+	\item If you need python to do the work, use \bt{\#!/usr/bin/python} instead
 \end{enumerate}
 
 \subsection{Special Variables}
@@ -79,8 +144,143 @@
 	\item \textbf{Exit Code}: \bt{\$?} The exit code holds the \rt{last} command that shell executed
 \end{enumerate}
 
-\subsection{Conditionals}
+\subsection{self-defined variables}
 \begin{enumerate}
-	\item s
+	\item \rt{No} spaces before and after the \textit{equal sign}
+	\item Variables are case-sensitive, and should be in \rt{uppercase}
 \end{enumerate}
+\begin{footnotesize}
+\begin{verbatim}
+#!/bin/bash
+# Define your variable
+VARIABLE_NAME="VALUE
+# Use your variable
+echo "This is my variable ${VARIABLE_NAME}"
+# assign the output of a command as variable
+VARIABLE=$(<command>)
+VARIABLE=$`<command>`
+\end{verbatim}
+\end{footnotesize}
+
+\subsection{Conditionals}
+\begin{footnotesize}
+\begin{verbatim}
+# establish a condition expression between brackets
+[ condition-to-test-for ]
+\end{verbatim}
+\end{footnotesize}
+File operators
+\begin{enumerate}
+	\item -d FILE if file is a directory
+	\item -e FILE if file exists
+	\item -f FILE if file exists and is a regular file
+	\item -r FILE if file is readable by you
+	\item -s FILE if file exists and is not empty
+	\item -w FILE if file is writable by you
+	\item -x FILE if file is executable by you 
+\end{enumerate}
+String operators:
+\begin{enumerate}
+	\item -z STRING if string is empty
+	\item -n STRING is string is not empty
+	\item STRING1 = STRING2 if strings are equal
+	\item STRING1 != STRING2 if strings are not equal
+\end{enumerate}
+Arithmeitc operators:
+\begin{enumerate}
+	\item arg1 -eq arg2 : arg1 = arg2
+	\item arg1 -ne arg2 : arg1 != arg2
+	\item arg1 -lt arg2 : arg1 \textless arg2
+	\item arg1 -le arg2 : arg1 \textless= arg2
+	\item arg1 -gt arg2 : arg1 \textgreater arg2
+	\item arg1 -ge arg2 : arg1 \textgreater= arg2
+\end{enumerate}
+\subsection{if statement}
+\begin{footnotesize}
+\begin{verbatim}
+# Must be space between conditional and if
+# Must have space after left bracket and before right bracket
+# Must have space before and after equal sign when used for conditionals
+# use && for AND, || for or
+if [ condition-true ]
+then
+  command 1
+  command 2
+elif [ condition-true ]
+then
+  command 3
+  command 4
+else
+  command 5
+  command 6
+fi
+\end{verbatim}
+\end{footnotesize}
+\subsection{for loop}
+\begin{footnotesize}
+\begin{verbatim}
+# ITEM should be seperated by space
+for VARIABLE_NAME in ITEM1 ITEM2 ITEM3
+do
+  command 1
+  command 2
+done
+# One can store list of items in variable, then iterate
+ITEMS="ITEM1 ITEM2 ITEM3"
+for ITEM in ${ITMES}
+do
+  command 1
+  command 2
+done
+\end{verbatim}
+\end{footnotesize}
+
+\subsection{read}
+\begin{footnotesize}
+	\begin{verbatim}
+		read -p "ENTER THE INPUT: " INPUT
+	\end{verbatim}
+\end{footnotesize}
+
+\subsection{Logical Operator}
+\begin{enumerate}
+	\item the first second command will execute \rt{if and only if} the first one exit with 0
+	\begin{verbatim}
+	command1 && command2
+	\end{verbatim}
+	\item the second command will execute if and only if the first one \rt{failed}, in other word, if the first command succeed, the second one won't execute
+	\begin{verbatim}
+	command1 || command2
+	\end{verbatim}
+	\item two commands will execute no matter what
+	\begin{verbatim}
+	command1 ; command2
+	\end{verbatim}
+\end{enumerate}
+
+\subsection{exit}
+\begin{enumerate}
+	\item use \textbf{exit} command with a number from 0 to 255
+	\item If no exit code is specified, the previously executed command is used as the exit status
+\end{enumerate}
+
+\subsection{function}
+\begin{footnotesize}
+\begin{verbatim}
+# create a function
+# Method 1
+function funcion-name(){
+  # Code
+}
+# Method 2
+function-name(){
+  # Code
+}
+
+#Passing arguments
+function-name arg1 arg2 arg3
+\end{verbatim}
+
+\end{footnotesize}
+
 \end{document}
