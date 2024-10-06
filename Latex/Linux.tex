@@ -19,7 +19,7 @@
 
 %enable lstlisting
 \usepackage{listings}
-
+\usepackage{verbatim}
 \usepackage{framed}
 
 %自定義顏色
@@ -47,6 +47,8 @@
 
 
 \newcommand{\bs}[1]{\boldsymbol{#1}}
+
+\usepackage{verbatim}
 
 
 \lstset{
@@ -126,6 +128,53 @@ OPTION
 \end{verbatim}
 \end{footnotesize}
 
+\section{Package}
+\subsection{apt}
+\begin{footnotesize}
+\begin{verbatim}
+sudo apt update
+# upgrade all installed packages to their lastest versions
+sudo apt upgrade
+
+# install a package
+sudo apt install <package1> <package2> <package3>
+
+# remove a package
+sudo apt remove <package>
+
+# removes both package and its configuration file
+sudo apt purge <package>
+
+# search for a package
+apt search <package>
+
+# show information about a package
+apt show <package>
+
+# list installed package
+apt list --installed
+
+# clean up unusded packages and dependencies
+sudo apt autoremove
+
+# clean package cache
+sudo apt clean
+
+# fix broken dependencies
+sudo apt --fix-broken install 
+
+# upgrade distribution (don't try easily)
+sudo do-release-upgrade
+
+# install local .deb package
+sudo dpkg -i <package.deb>
+
+# fix a package at certain package
+sudo apt-mark hold <package>
+sudo apt-mark unmode <package>
+\end{verbatim}
+\end{footnotesize}
+
 \section{Shell Script}
 \subsection{Rule of Thumb}
 \begin{enumerate}
@@ -159,6 +208,17 @@ echo "This is my variable ${VARIABLE_NAME}"
 # assign the output of a command as variable
 VARIABLE=$(<command>)
 VARIABLE=$`<command>`
+\end{verbatim}
+\end{footnotesize}
+
+\subsection{list and arrays}
+\begin{footnotesize}
+\begin{verbatim}
+# create an array
+declare -a ARRAY
+
+# add element to array
+ARRAY+=("element1")
 \end{verbatim}
 \end{footnotesize}
 
@@ -216,6 +276,14 @@ else
 fi
 \end{verbatim}
 \end{footnotesize}
+One can directly utilize the exit code of a command as the condition of if statement:
+\begin{footnotesize}
+\begin{verbatim}
+if <command>; then
+// your code
+fi
+\end{verbatim}
+\end{footnotesize}
 \subsection{for loop}
 \begin{footnotesize}
 \begin{verbatim}
@@ -231,6 +299,16 @@ for ITEM in ${ITMES}
 do
   command 1
   command 2
+done
+\end{verbatim}
+\end{footnotesize}
+An array-based for-loop
+\begin{footnotesize}
+\begin{verbatim}
+array=(itme1 item2 item3)
+
+for item in "${array[@]}"; do
+// your code
 done
 \end{verbatim}
 \end{footnotesize}
@@ -280,7 +358,55 @@ function-name(){
 #Passing arguments
 function-name arg1 arg2 arg3
 \end{verbatim}
-
 \end{footnotesize}
 
+\section{Embedded Linux}
+Four element of embedded Linux:
+\begin{enumerate}
+	\item Toolchain: the compiler and other tools needed to create code for the target device
+	\item Bootloader: the program that initializes the board and loads the Linux kernel
+	\item Kernel: managing system resources and interfacing with hardware
+	\item Root filesystem: libraries and programs that are run once kernel has completed initialization
+\end{enumerate}
+
+\subsection{Toolchain}
+\begin{enumerate}
+	\item Toolchain comprising of the followings:
+	\begin{enumerate}
+		\item compiler
+		\item linker
+		\item runtime libraries
+	\end{enumerate}
+	\item \bt{bootloader}, \bt{kernel} and \bt{root filesystem} are compiled by toolchain
+	\item GNU tool chain is composed of three things:
+	\begin{enumerate}
+		\item \textbf{Binutils}
+		\item \textbf{GNU Compiler Collection} (GCC)
+		\item \textbf{C library}: a standardized application program interface (API) based on POSIX specification.
+	\end{enumerate}
+	\item \textbf{headers} should be from, or older than the kernel your using.
+	\item \textbf{GNU Debugger} (GDB) is usually considered a part of the tool chain.
+	\item toolchain can be categorized as below:
+	\begin{enumerate}
+		\item Native: this toolchain runs on the same type of system as the program it generates.
+		\item Cross: this toolchain runs on a different type of system than the target
+	\end{enumerate}
+	\item to build toolchain, must consider the following things:
+	\begin{enumerate}
+		\item CPU architecture
+		\item big or little endian
+		\item floating point support
+	\end{enumerate}
+	\item application binary interface (ABI): how different pieces of compiled code (binaries) work together. For example, ARM use \textbf{Extended Application Binary Interface} (EABI)
+	\item The programming interface to Unix operating system is defined in the \bt{C language}, which is defined by \textbf{POSIX}
+	\item \textbf{C Library} is the \textit{implementation} of Portable Operating System Interface (POSIX):
+	\begin{enumerate}
+		\item \textbf{glibc}: use this !
+		\item \textbf{musl libc}: use when storage less than 32 MiB
+		\item \textbf{uClibc-ng}
+		\item \textbf{eglibc}
+	\end{enumerate}
+	\item All the applications need to communicate with Linux kernel through the \bt{C library}
+\end{enumerate}
+	
 \end{document}
