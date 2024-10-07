@@ -175,6 +175,38 @@ sudo apt-mark unmode <package>
 \end{verbatim}
 \end{footnotesize}
 
+\section{ssh}
+\begin{footnotesize}
+\begin{verbatim}
+# transfer a file from local to remote
+scp /path/to/local/file username@remote:/path/to/remote/directory
+# transfer a directory from local to remote
+scp -r /path/to/local/file username@remote:/path/to/remote/directory
+
+# transfer a file from remote to local
+scp username@remote:/path/to/remote/directory /path/to/local/file 
+# transfer a directory from remote to local
+scp -r username@remote:/path/to/remote/directory /path/to/local/file 
+\end{verbatim}
+\end{footnotesize}
+
+\section{USB}
+
+\subsection{99-com.rules}
+Add symbolic according to physical port. First cd \textbf{/etc/udev/rules.d/99-com.rules}
+\begin{footnotesize}
+\begin{verbatim}
+SUBSYSTEM=="tty", KERNELS="<your kernel>", SYMLINK+="<your name>"
+\end{verbatim}
+\end{footnotesize}
+
+\begin{footnotesize}
+\begin{verbatim}
+# check attribute of a device
+udevadm info --name=/dev/ttyACM* --attribute-walk
+\end{verbatim}
+\end{footnotesize}
+
 \section{Shell Script}
 \subsection{Rule of Thumb}
 \begin{enumerate}
