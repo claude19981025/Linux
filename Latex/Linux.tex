@@ -176,6 +176,37 @@ sudo apt-mark unmode <package>
 \end{footnotesize}
 
 \section{ssh}
+\begin{enumerate}
+	\item \texttt{ssh} is the \textit{client program} of the OepnSSH
+	\item To set up an SSH connection, you need the remote host's \textit{public key}
+	\item Public key cryptography have two keys:
+	\begin{enumerate}
+		\item public key: can encrypt a message but not decrypt it
+		\item private: can decrypt a message from the public key
+	\end{enumerate}
+	\item the package name of ssh server on debian are \texttt{openssh-server}, and its systemd service name is \texttt{ssh}
+	\item Check configurations and hosts keys in \texttt{/etc/ssh}:
+	\begin{enumerate}
+		\item \texttt{sshd\_config}: server configuration filename
+		\item \texttt{ssh\_config}: client setup file
+	\end{enumerate}
+	\item OpenSSH Key Files: (rsa and dsa are just different algorithms)
+	\begin{enumerate}
+		\item ssh\_host\_rsa\_key
+		\item ssh\_host\_rsa\_key.pub
+		\item ssh\_host\_dsa\_key
+		\item ssh\_host\_dsa\_key.pub		
+	\end{enumerate}
+	\item Use \texttt{fail2ban} to prevent malicious attacks from the internet
+\end{enumerate}
+ssh client usage
+\begin{footnotesize}
+\begin{verbatim}
+# log in to a remote host
+$ ssh remote_username@remote_host
+\end{verbatim}
+\end{footnotesize}
+scp usage
 \begin{footnotesize}
 \begin{verbatim}
 # transfer a file from local to remote
@@ -344,12 +375,48 @@ for item in "${array[@]}"; do
 done
 \end{verbatim}
 \end{footnotesize}
+A wildcard for loop
+\begin{footnotesize}
+\begin{verbatim}
+# Search all .pattern file in the directory same as the bashscript
+for FILE in *.pattern
+do
+// code
+done
+\end{verbatim}
+\end{footnotesize}
+Use pipe \texttt{|} to represent ``or'' in case 
+\subsection{case statements}
+\begin{footnotesize}
+\begin{verbatim}
+read -p "Enter y or n: " ANSWER
+case "$ANSWER" in
+  [yY]|[yY][eE][sS])
+    echo "You enter yes"
+    ;;
+  [nN]|[nN][oO])
+    echo "You enter no"
+    ;;
+  *)
+    echo "Invalid answer"
+    ;;
+esac
+\end{verbatim}
+\end{footnotesize}
 
 \subsection{read}
 \begin{footnotesize}
 	\begin{verbatim}
 		read -p "ENTER THE INPUT: " INPUT
 	\end{verbatim}
+\end{footnotesize}
+A common design pattern
+\begin{footnotesize}
+\begin{verbatim}
+read -p "Enter y or n: " ANSWER
+case "$ANSWER" in
+	[yY][]
+\end{verbatim}
 \end{footnotesize}
 
 \subsection{Logical Operator}
@@ -391,6 +458,27 @@ function-name(){
 function-name arg1 arg2 arg3
 \end{verbatim}
 \end{footnotesize}
+
+\subsection{wildcard}
+\begin{enumerate}
+	\item \textbf{wildcard} is a character set used to represent one or more characters in file or directory names.
+	\item \texttt{*}: asterisk, zero or more character
+	\item \texttt{?}: question mark, one character
+	\item \texttt{[]}: square brackets, any single character within the brackets.
+	\item \texttt{[!...]}: negated square brackets, matches any character \textbf{except} those in the character
+	\item \textbf{character class}: \texttt{ca[nt]*} will match can, cat, canbus, or catch
+	\item \textbf{ranges}: \texttt{[a-g]} match all characters from "a" to "g", [3-6] match the numbers 3, 4, 5
+	\item \textbf{named character classes}:
+	\begin{enumerate}
+		\item \texttt{[:alpha:]} Matches lowercase and uppercase letters
+		\item \texttt{[:alnum:]} Matches alpha and digits.
+		\item \texttt{[:digit:]} Represents numbers in decimal
+		\item \texttt{[:upper:]} Matches uppercase letters
+		\item \texttt{[:lower:]} Matches lowercase letters
+		\item \texttt{[:space:]} Matches whitespace, such as spaces, tabs and newline characters
+	\end{enumerate}		
+	\item \textbf{Matching Wildcard Patterns}: to escape from wildcard patterns, use \textbf{backslash}
+\end{enumerate}
 
 \section{Embedded Linux}
 Four element of embedded Linux:
