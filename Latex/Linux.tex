@@ -480,6 +480,20 @@ function-name arg1 arg2 arg3
 	\item \textbf{Matching Wildcard Patterns}: to escape from wildcard patterns, use \textbf{backslash}
 \end{enumerate}
 
+\section{C++}
+\begin{footnotesize}
+\begin{verbatim}
+# check library being used by my program
+ldd ./yourCppProgram
+
+# the be sure to check here
+/usr/lib/x86_64-linux-gnu/libstdc++.so.6
+
+# If the steps above doesn't work, remove the build folder and cmake again
+export LD_LIBRARY_PATH=/home/simon/gcc14build/lib64:$LD_LIBRARY_PATH
+\end{verbatim}
+\end{footnotesize}
+
 \section{Embedded Linux}
 Four element of embedded Linux:
 \begin{enumerate}
